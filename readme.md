@@ -1,6 +1,6 @@
 # @ceddl/ceddl-aditional-inputs
 
-📦 aditional inputs for the ceddl polyfillo
+📦 aditional inputs for the ceddl polyfill
 
 > This package is not included in the spec and not part of th ceddl polyfill.
 
@@ -25,6 +25,15 @@ This aditional input repository for ceddl polyfill shows how to create custom in
 3. User session uuid input.
 4. Heatmap input (please also include how to do the backend render)
 
+
+<h2 align="center">development</h2>
+
+```
+npm install
+npm run dev
+```
+
+This will start the development server on  http://localhost:8080/
 
 <h2 align="center">License</h2>
 

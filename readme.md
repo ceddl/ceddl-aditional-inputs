@@ -10,7 +10,7 @@ npm install@ceddl/ceddl-aditional-inputs
 
 <h2 align="center">Introduction</h2>
 
-This aditional input repository for ceddl polyfill shows how to create custom inputs. we aim to provide plug and play solutions to common input requirements.
+This aditional input repository for ceddl polyfill shows how to create custom inputs. We aim to provide plug and play solutions to common input requirements.
 
 ### Available inputs
 
@@ -18,7 +18,7 @@ This aditional input repository for ceddl polyfill shows how to create custom in
 2. page-ready
 3. performance-timing
 
-### looking for pull requests
+### Looking for pull requests
 
 1. Improve documentation for each input.
 2. Time on site input.

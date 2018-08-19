@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/product.css">
     <link rel="stylesheet" type="text/css" href="/css/advert.css">
-    <script src="index.js" ></script>
+    <script src="js/ceddl-polyfill/index.js" ></script>
 </head>
 
 <body ceddl-observe="page"
@@ -291,55 +291,10 @@
 <script src="js/products.js" ></script>
 <script src="js/app.js" ></script>
 <script async src="js/demo.models.js"></script>
-<script src="js/temporary-aditional-inputs/page-metadata.js" ></script>
-<script src="js/temporary-aditional-inputs/performance-timing.js" ></script>
-<script src="js/temporary-aditional-inputs/page-ready.js" ></script>
+<script src="page-metadata.js" ></script>
+<script src="performance-timing.js" ></script>
+<script src="page-ready.js" ></script>
 
 </body>
 
 </html>
-
-
-<!-- <div ceddl-observe="cart" quantity="2" >
-  <div ceddl-observe="products">
-    <div>
-      <div ceddl-observe="product" ceddl-model="package" name="samsung galaxy s8 + red essential" >
-        <div ceddl-observe="device" name="galaxy s8" ></div>
-
-        <div ceddl-observe="sim" name="red-essential" ></div>
-      </div>
-      <div ceddl-observe="product" _model="package" name="samsung galaxy s8 + red essential" >
-        <div ceddl-observe="device" name="galaxy s8" ></div>
-
-        <div ceddl-observe="sim" name="red-essential" ></div>
-      </div>
-      <div ceddl-observe="popup"></div>
-    </div>
-  </div>
-</div> -->
-
-<!-- {
-popup: {}
-cart: {
-  quantity: 1,
-  products: [
-    {
-      name: 'Samsung galaxy s8 + red essential',
-      device: {
-        name: 'Samsung galaxy s8'
-      },
-      sim: {
-        name: 'Red essential'
-      }
-    },
-    {
-      name: 'Samsung galaxy s8 + red essential',
-      device: {
-        name: 'Samsung galaxy s8'
-      },
-      sim: {
-        name: 'Red essential'
-      }
-    }
-  ]
-} -->

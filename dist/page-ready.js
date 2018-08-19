@@ -6,9 +6,6 @@
 
     CEDDL = CEDDL && CEDDL.hasOwnProperty('default') ? CEDDL['default'] : CEDDL;
 
-    // We will make this more pretty by creating a separated repo and npm module for supported inputs.
-    // yust making sure that people can make custom imputs with single page aplication support and
-    // minimmal complexity.
     (function() {
 
         var _store = {};
@@ -94,7 +91,7 @@
             _listeners.forEach(function(eventCallback) {
                 CEDDL.eventbus.off(eventCallback.name, eventCallback.markComplete);
             });
-            this._listeners = [];
+            _listeners = [];
 
             // If there is no need to wait for anything dispatch event when the page is ready.
             if (!eventNames || eventNames.length === 0) {
@@ -113,8 +110,8 @@
                 });
             }
 
-            if(this.el) {
-                this.el.setAttribute('data-page-ready', eventNames.join(' '));
+            if(_el) {
+                _el.setAttribute('data-page-ready', eventNames.join(' '));
             }
 
             // Create the new state

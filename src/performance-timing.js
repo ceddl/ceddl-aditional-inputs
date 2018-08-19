@@ -1,7 +1,5 @@
 import CEDDL from 'CEDDL'
-// We will make this more pretty by creating a separated repo and npm module for supported inputs.
-// yust making sure that people can make custom imputs with single page aplication support and
-// minimmal complexity.
+
 (function() {
 
     function pageReady(callback) {

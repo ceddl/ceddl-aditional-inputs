@@ -1,7 +1,7 @@
 {
   "name": "@ceddl/ceddl-aditional-inputs",
   "version": "0.9.0",
-  "description": "customer experience digital data layer polyfill. Bridging the gap between the 2015 ceddl spec and the browsers",
+  "description": "Aditional inputs for ceddl. If the core polyfill does not have what you are looking for.",
   "repository": {
     "type": "git",
     "url": "git://github.com/ceddl/ceddl-aditional-inputs"
@@ -11,11 +11,13 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "node demo/app.js",
+
+    "dev": "copyfiles -u 4 node_modules/@ceddl/ceddl-polyfill/dist/*.js demo/js/ceddl-polyfill/ && node demo/app.js",
     "build": "node_modules/rollup/bin/rollup -c ./rollup.config.js",
     "lint": "node_modules/eslint/bin/eslint.js src/**"
   },
   "devDependencies": {
+    "@ceddl/ceddl-polyfill": "^0.9.0",
     "copyfiles": "^2.0.0",
     "eslint": "^5.2.0",
     "glob": "7.1.2",

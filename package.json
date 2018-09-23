@@ -11,13 +11,12 @@
   },
   "main": "index.js",
   "scripts": {
-
     "dev": "copyfiles -u 4 node_modules/@ceddl/ceddl-polyfill/dist/*.js demo/js/ceddl-polyfill/ && node demo/app.js",
     "build": "node_modules/rollup/bin/rollup -c ./rollup.config.js",
     "lint": "node_modules/eslint/bin/eslint.js src/**"
   },
   "devDependencies": {
-    "@ceddl/ceddl-polyfill": "^0.9.0",
+    "@ceddl/ceddl-polyfill": "0.9.1",
     "copyfiles": "^2.0.0",
     "eslint": "^5.2.0",
     "glob": "7.1.2",

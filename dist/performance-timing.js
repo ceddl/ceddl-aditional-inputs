@@ -1,10 +1,10 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('CEDDL')) :
-    typeof define === 'function' && define.amd ? define(['CEDDL'], factory) :
-    (factory(global.CEDDL));
-}(this, (function (CEDDL) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('ceddl')) :
+    typeof define === 'function' && define.amd ? define(['ceddl'], factory) :
+    (factory(null));
+}(this, (function (ceddl) { 'use strict';
 
-    CEDDL = CEDDL && CEDDL.hasOwnProperty('default') ? CEDDL['default'] : CEDDL;
+    ceddl = ceddl && ceddl.hasOwnProperty('default') ? ceddl['default'] : ceddl;
 
     (function() {
 
@@ -95,7 +95,7 @@
             });
         }
 
-        createPerformanceModel(CEDDL.ModelFactory);
+        createPerformanceModel(ceddl.ModelFactory);
         pageReady(function () {
            if (!performance || !performance.timing) {
                 return;
@@ -103,7 +103,7 @@
                 var checkComplete = setInterval(function () {
                     if(performance.timing.domComplete > 0) {
                         clearInterval(checkComplete);
-                        CEDDL.pushToDataObject('performanceTiming', getPerformanceTimingData());
+                        ceddl.emitModel('performanceTiming', getPerformanceTimingData());
                     }
                 }, 500);
             }

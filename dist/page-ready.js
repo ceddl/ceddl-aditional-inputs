@@ -1,10 +1,10 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('CEDDL')) :
-    typeof define === 'function' && define.amd ? define(['CEDDL'], factory) :
-    (factory(global.CEDDL));
-}(this, (function (CEDDL) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('ceddl')) :
+    typeof define === 'function' && define.amd ? define(['ceddl'], factory) :
+    (factory(null));
+}(this, (function (ceddl) { 'use strict';
 
-    CEDDL = CEDDL && CEDDL.hasOwnProperty('default') ? CEDDL['default'] : CEDDL;
+    ceddl = ceddl && ceddl.hasOwnProperty('default') ? ceddl['default'] : ceddl;
 
     (function() {
 
@@ -51,7 +51,7 @@
                 var allCallbacksComplete = Object.keys(_store).reduce(isStoreValid, true);
                 if (allCallbacksComplete) {
                     clearTimeout(pageReadyWarning);
-                    CEDDL.fireEvent('pageready', _store);
+                    ceddl.emitEvent('pageready', _store);
                 }
             };
         }
@@ -59,7 +59,7 @@
         function setCompleteListener(name) {
             // Keep a reference to the callback so we can remove it from the eventbus.
             var markComplete = createCompleteCallback(name);
-            CEDDL.eventbus.once(name, markComplete);
+            ceddl.eventbus.once(name, markComplete);
 
             return {
                 name: name,
@@ -72,7 +72,7 @@
                 clearTimeout(pageReadyWarning);
             }
             pageReadyWarning = setTimeout(function(){
-                CEDDL.fireEvent('pageready', {
+                ceddl.emitEvent('pageready', {
                     error: true,
                     msg: 'Failed to complete within 4000 ms'
                 });
@@ -89,14 +89,14 @@
             // Reset the previous state
             _store = {};
             _listeners.forEach(function(eventCallback) {
-                CEDDL.eventbus.off(eventCallback.name, eventCallback.markComplete);
+                ceddl.eventbus.off(eventCallback.name, eventCallback.markComplete);
             });
             _listeners = [];
 
             // If there is no need to wait for anything dispatch event when the page is ready.
             if (!eventNames || eventNames.length === 0) {
                 pageReady(function() {
-                    CEDDL.fireEvent('pageready', _store);
+                    ceddl.emitEvent('pageready', _store);
                 });
                 return;
             }
@@ -124,7 +124,7 @@
 
         _el = document.querySelector('[data-page-ready]');
         pageReadySetListeners(_el ? _el.getAttribute('data-page-ready') : '');
-        CEDDL.eventbus.on('initialize', function() {
+        ceddl.eventbus.on('initialize', function() {
             _el = document.querySelector('[data-page-ready]');
             pageReadySetListeners(_el ? _el.getAttribute('data-page-ready') : '');
         });

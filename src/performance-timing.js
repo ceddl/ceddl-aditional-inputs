@@ -1,4 +1,4 @@
-import CEDDL from 'CEDDL'
+import ceddl from 'ceddl'
 
 (function() {
 
@@ -90,7 +90,7 @@ import CEDDL from 'CEDDL'
         });
     }
 
-    createPerformanceModel(CEDDL.ModelFactory);
+    createPerformanceModel(ceddl.ModelFactory);
     pageReady(function () {
        if (!performance || !performance.timing) {
             return;
@@ -98,7 +98,7 @@ import CEDDL from 'CEDDL'
             var checkComplete = setInterval(function () {
                 if(performance.timing.domComplete > 0) {
                     clearInterval(checkComplete);
-                    CEDDL.pushToDataObject('performanceTiming', getPerformanceTimingData());
+                    ceddl.emitModel('performanceTiming', getPerformanceTimingData());
                 }
             }, 500);
         }

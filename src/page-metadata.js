@@ -1,4 +1,4 @@
-import CEDDL from 'CEDDL'
+import ceddl from 'ceddl'
 
 (function() {
 
@@ -34,10 +34,10 @@ import CEDDL from 'CEDDL'
 
     function setListeners() {
         window.addEventListener('hashchange', function(){
-            CEDDL.pushToDataObject('pageMetadata', getPageMeta());
+            ceddl.emitModel('pageMetadata', getPageMeta());
         });
-        CEDDL.eventbus.on('initialize', function(){
-            CEDDL.pushToDataObject('pageMetadata', getPageMeta());
+        ceddl.eventbus.on('initialize', function(){
+            ceddl.emitModel('pageMetadata', getPageMeta());
         });
     }
 
@@ -153,9 +153,9 @@ import CEDDL from 'CEDDL'
         return data;
     }
 
-    createPageMetadataModel(CEDDL.ModelFactory);
+    createPageMetadataModel(ceddl.modelFactory);
     pageReady(function () {
-        CEDDL.pushToDataObject('pageMetadata', getPageMeta());
+        ceddl.emitModel('pageMetadata', getPageMeta());
         setListeners();
     });
 

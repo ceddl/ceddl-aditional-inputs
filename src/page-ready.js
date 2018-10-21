@@ -1,4 +1,4 @@
-import CEDDL from 'CEDDL'
+import ceddl from 'ceddl'
 
 (function() {
 
@@ -46,7 +46,7 @@ import CEDDL from 'CEDDL'
             var allCallbacksComplete = Object.keys(_store).reduce(isStoreValid, true);
             if (allCallbacksComplete) {
                 clearTimeout(pageReadyWarning);
-                CEDDL.fireEvent('pageready', _store);
+                ceddl.emitEvent('pageready', _store);
             }
         };
     }
@@ -54,7 +54,7 @@ import CEDDL from 'CEDDL'
     function setCompleteListener(name) {
         // Keep a reference to the callback so we can remove it from the eventbus.
         var markComplete = createCompleteCallback(name);
-        CEDDL.eventbus.once(name, markComplete);
+        ceddl.eventbus.once(name, markComplete);
 
         return {
             name: name,
@@ -67,7 +67,7 @@ import CEDDL from 'CEDDL'
             clearTimeout(pageReadyWarning);
         }
         pageReadyWarning = setTimeout(function(){
-            CEDDL.fireEvent('pageready', {
+            ceddl.emitEvent('pageready', {
                 error: true,
                 msg: 'Failed to complete within 4000 ms'
             });
@@ -84,14 +84,14 @@ import CEDDL from 'CEDDL'
         // Reset the previous state
         _store = {};
         _listeners.forEach(function(eventCallback) {
-            CEDDL.eventbus.off(eventCallback.name, eventCallback.markComplete);
+            ceddl.eventbus.off(eventCallback.name, eventCallback.markComplete);
         });
         _listeners = [];
 
         // If there is no need to wait for anything dispatch event when the page is ready.
         if (!eventNames || eventNames.length === 0) {
             pageReady(function() {
-                CEDDL.fireEvent('pageready', _store);
+                ceddl.emitEvent('pageready', _store);
             });
             return;
         }
@@ -119,7 +119,7 @@ import CEDDL from 'CEDDL'
 
     _el = document.querySelector('[data-page-ready]');
     pageReadySetListeners(_el ? _el.getAttribute('data-page-ready') : '');
-    CEDDL.eventbus.on('initialize', function() {
+    ceddl.eventbus.on('initialize', function() {
         _el = document.querySelector('[data-page-ready]');
         pageReadySetListeners(_el ? _el.getAttribute('data-page-ready') : '');
     });

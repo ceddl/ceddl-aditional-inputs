@@ -1,10 +1,10 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('CEDDL')) :
-    typeof define === 'function' && define.amd ? define(['CEDDL'], factory) :
-    (factory(global.CEDDL));
-}(this, (function (CEDDL) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('ceddl')) :
+    typeof define === 'function' && define.amd ? define(['ceddl'], factory) :
+    (factory(null));
+}(this, (function (ceddl) { 'use strict';
 
-    CEDDL = CEDDL && CEDDL.hasOwnProperty('default') ? CEDDL['default'] : CEDDL;
+    ceddl = ceddl && ceddl.hasOwnProperty('default') ? ceddl['default'] : ceddl;
 
     (function() {
 
@@ -39,10 +39,10 @@
 
         function setListeners() {
             window.addEventListener('hashchange', function(){
-                CEDDL.pushToDataObject('pageMetadata', getPageMeta());
+                ceddl.emitModel('pageMetadata', getPageMeta());
             });
-            CEDDL.eventbus.on('initialize', function(){
-                CEDDL.pushToDataObject('pageMetadata', getPageMeta());
+            ceddl.eventbus.on('initialize', function(){
+                ceddl.emitModel('pageMetadata', getPageMeta());
             });
         }
 
@@ -158,9 +158,9 @@
             return data;
         }
 
-        createPageMetadataModel(CEDDL.ModelFactory);
+        createPageMetadataModel(ceddl.modelFactory);
         pageReady(function () {
-            CEDDL.pushToDataObject('pageMetadata', getPageMeta());
+            ceddl.emitModel('pageMetadata', getPageMeta());
             setListeners();
         });
 

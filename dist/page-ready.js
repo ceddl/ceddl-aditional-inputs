@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('ceddl')) :
     typeof define === 'function' && define.amd ? define(['ceddl'], factory) :
-    (factory(null));
+    (factory(global.ceddl));
 }(this, (function (ceddl) { 'use strict';
 
     ceddl = ceddl && ceddl.hasOwnProperty('default') ? ceddl['default'] : ceddl;

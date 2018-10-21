@@ -1,6 +1,6 @@
 {
   "name": "@ceddl/ceddl-aditional-inputs",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Aditional inputs for ceddl. If the core polyfill does not have what you are looking for.",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "lint": "node_modules/eslint/bin/eslint.js src/**"
   },
   "devDependencies": {
-    "@ceddl/ceddl-polyfill": "0.9.2",
+    "@ceddl/ceddl-polyfill": "0.9.3",
     "copyfiles": "^2.0.0",
     "eslint": "^5.2.0",
     "glob": "7.1.2",

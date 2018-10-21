@@ -95,7 +95,7 @@
             });
         }
 
-        createPerformanceModel(ceddl.ModelFactory);
+        createPerformanceModel(ceddl.modelFactory);
         pageReady(function () {
            if (!performance || !performance.timing) {
                 return;

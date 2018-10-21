@@ -21,8 +21,6 @@ This aditional input repository for ceddl polyfill shows how to create custom in
 ### Looking for pull requests
 
 1. Improve documentation for each input.
-2. Time on site input.
-3. User session uuid input.
 4. Heatmap input (please also include how to do the backend render)
 
 

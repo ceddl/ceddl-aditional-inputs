@@ -9,12 +9,15 @@
   "author": {
     "name": "Roland Broekema"
   },
-  "main": "index.js",
   "scripts": {
     "dev": "node demo/app.js",
     "build": "node_modules/rollup/bin/rollup -c ./rollup.config.js",
     "lint": "node_modules/eslint/bin/eslint.js src/**",
-    "lintapp": "node_modules/eslint/bin/eslint.js demo/js/**"
+    "lintapp": "node_modules/eslint/bin/eslint.js demo/js/**",
+    "patch": "npm version patch",
+    "minor": "npm version minor",
+    "major": "npm version minor",
+    "push": "npm publish --access=public"
   },
   "devDependencies": {
     "@ceddl/ceddl-polyfill": "0.9.3",

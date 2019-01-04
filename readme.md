@@ -40,4 +40,4 @@ The ceddl-aditional-inputs documentation and logos (e.g., .md, .png, .sketch)  f
 
 <h2 align="center">CEDDL-polyfill</h2>
 Customer experience digital data layer polyfill. Bridging the gap between the ceddl spec's and the browsers.
-For more information please visit [https://www.ceddlbyexample.com/](https://www.ceddlbyexample.com/)
+For more information please visit https://www.ceddlbyexample.com/

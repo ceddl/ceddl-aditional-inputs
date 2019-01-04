@@ -1,3 +1,5 @@
+/* global _ */
+
 var demo = demo ? demo : {};
 demo.cartProductTemplate = _.template(document.querySelector("#cart-product-template").innerHTML);
 
@@ -6,7 +8,7 @@ demo.cart = (function () {
     var containerElm = document.querySelector('.js-cart-container');
     var cart = {
         products: []
-    }
+    };
 
     function renderCart() {
         containerElm.innerHTML = cartTemplate({
@@ -44,7 +46,7 @@ demo.cart = (function () {
         addToCart: addToCart,
         clearCart: clearCart,
         renderCart: renderCart
-    }
+    };
 
 })();
 

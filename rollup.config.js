@@ -1,28 +1,37 @@
 export default [{
   input: 'src/page-metadata.js',
-  dest: 'dist/page-metadata.js',
-  globals: {
-    ceddl: 'ceddl'
-  },
   output: {
+    file: 'dist/page-metadata.js',
+    globals: {
+      ceddl: 'ceddl'
+    },
     format: 'umd'
   }
 },{
   input: 'src/page-ready.js',
-  dest: 'dist/page-ready.js',
-  globals: {
-    ceddl: 'ceddl'
-  },
   output: {
+    file: 'dist/page-ready.js',
+    globals: {
+      ceddl: 'ceddl'
+    },
     format: 'umd'
   }
 },{
   input: 'src/performance-timing.js',
-  dest: 'dist/performance-timing.js',
-  globals: {
-    ceddl: 'ceddl'
-  },
   output: {
+    file: 'dist/performance-timing.js',
+    globals: {
+      ceddl: 'ceddl'
+    },
+    format: 'umd'
+  }
+},{
+  input: 'src/heatmap.js',
+  output: {
+    file: 'dist/heatmap.js',
+    globals:  {
+      ceddl: 'ceddl'
+    },
     format: 'umd'
   }
 }];

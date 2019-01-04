@@ -22,6 +22,7 @@
                 document.addEventListener('DOMContentLoaded', callback);
             }
         }
+
         /**
          * Calculating steps in the page loading pipeline.
          * @return {Object} PerformanceObj containg performance metrics

@@ -1,4 +1,4 @@
-import ceddl from 'ceddl'
+import ceddl from 'ceddl';
 
 (function() {
 
@@ -15,7 +15,7 @@ import ceddl from 'ceddl'
         } else {
             document.addEventListener('DOMContentLoaded', callback);
         }
-    };
+    }
 
     /**
      * detects if the browser has Cookies enabled.

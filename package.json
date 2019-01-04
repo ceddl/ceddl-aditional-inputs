@@ -11,30 +11,23 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "copyfiles -u 4 node_modules/@ceddl/ceddl-polyfill/dist/*.js demo/js/ceddl-polyfill/ && node demo/app.js",
+    "dev": "node demo/app.js",
     "build": "node_modules/rollup/bin/rollup -c ./rollup.config.js",
-    "lint": "node_modules/eslint/bin/eslint.js src/**"
+    "lint": "node_modules/eslint/bin/eslint.js src/**",
+    "lintapp": "node_modules/eslint/bin/eslint.js demo/js/**"
   },
   "devDependencies": {
     "@ceddl/ceddl-polyfill": "0.9.3",
     "copyfiles": "^2.0.0",
     "eslint": "^5.2.0",
     "glob": "7.1.2",
+    "heatmap.js": "^2.0.5",
     "install": "^0.12.1",
     "jasmine-core": "3.1.0",
-    "karma": "2.0.4",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-coverage": "1.1.2",
-    "karma-jasmine": "1.1.2",
-    "karma-phantomjs-launcher": "1.0.4",
-    "karma-rollup-preprocessor": "^6.0.0",
-    "karma-sinon": "^1.0.5",
-    "karma-spec-reporter": "0.0.32",
-    "node-static": "^0.7.10",
+    "lodash": "^4.17.11",
+    "node-static": "^0.7.11",
     "npm": "^6.2.0",
     "rollup": "^0.62.0",
-    "rollup-plugin-istanbul": "^2.0.1",
-    "sinon": "^6.1.4",
     "uglify-js": "^3.4.7"
   }
 }

@@ -8268,3 +8268,15 @@ html ::selection {
     margin-top: 15px;
   }
 }
+
+.heatmap-canvas {
+  z-index: 5;
+}
+
+.heatmap-controls {
+  position: fixed;
+  padding: 24px;
+  z-index: 6;
+  top: 0;
+  right: 0;
+}

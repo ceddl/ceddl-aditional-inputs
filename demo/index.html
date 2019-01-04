@@ -8,14 +8,14 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/product.css">
     <link rel="stylesheet" type="text/css" href="/css/advert.css">
-    <script src="js/ceddl-polyfill/index.js" ></script>
+    <script src="/node_modules/@ceddl/ceddl-polyfill/dist/index.js"></script>
 </head>
 
 <body ceddl-observe="page"
   data-section="ceddl demo"
   data-framework="loDash"
   data-page-ready="pageMetadata products">
-
+<div class="cont"></div>
 <section style="padding-bottom: 0;" class="section">
     <div class="container">
         <div class="columns header">
@@ -61,6 +61,9 @@
                         <p>
                           <button ceddl-click="navigation" class="button is-success js-new-page">Move to Products Page</button>
                         </p>
+                        <p>
+                          <button ceddl-click="navigation" class="button is-success js-show-heatmap">Show current Heatmap</button>
+                        </p>
                         <form action="/" ceddl-submit="demosubmit" data-product-id="1234598754" onsubmit="event.preventDefault();">
                           <div class="field">
                             <label class="label">Name</label>
@@ -83,10 +86,6 @@
                           </div>
                       </form>
                     </div>
-                </article>
-                <article class="tile is-child notification is-info">
-                    <p class="title">Info</p>
-                    <p class="subtitle">Documentation links</p>
                 </article>
             </div>
             <div class="tile is-vertical is-8">
@@ -129,14 +128,8 @@
                     </div>
                 </div>
                 <div class="tile is-parent">
-                    <article class="tile is-child">
-                        <div class="message is-success">
-                          <p class="message-header">Results</p>
-                          <div class="message-body">
-                              <pre class="js-data-object" ></pre>
-                              <pre class="js-event-object" ></pre>
-                          </div>
-                        </div>
+                    <article class="tile is-child" id="results">
+                      <div class="json-container-wrap" id="json-container"></div>
                     </article>
                 </div>
             </div>
@@ -286,7 +279,10 @@
     </div>
 </script>
 
-<script src="js/lodash.js" ></script>
+<script src="/node_modules/lodash/lodash.min.js"></script>
+<script src="/node_modules/heatmap.js/build/heatmap.js"></script>
+<script src="js/demo.heat.js" ></script>
+<script src="js/json-viewer.js" ></script>
 <script src="js/cart.js" ></script>
 <script src="js/products.js" ></script>
 <script src="js/app.js" ></script>
@@ -294,6 +290,7 @@
 <script src="page-metadata.js" ></script>
 <script src="performance-timing.js" ></script>
 <script src="page-ready.js" ></script>
+<script src="heatmap.js" ></script>
 
 </body>
 

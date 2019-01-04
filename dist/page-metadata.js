@@ -22,6 +22,7 @@
                 document.addEventListener('DOMContentLoaded', callback);
             }
         }
+
         /**
          * detects if the browser has Cookies enabled.
          * @return {Boolean} ret

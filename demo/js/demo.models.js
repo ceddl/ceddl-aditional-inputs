@@ -1,3 +1,5 @@
+/* global ceddl */
+
 var mf = ceddl.modelFactory;
 
 mf.create({

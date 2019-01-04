@@ -1,36 +1,46 @@
 var static = require('node-static');
 var rollup = require('rollup');
-var fileServer = new static.Server('./demo');
-var distServer = new static.Server('./dist');
-
-var watchOptions = [{
+var watchOptions =  [{
   input: 'src/page-metadata.js',
-  dest: 'dist/page-metadata.js',
-  globals: {
-    ceddl: 'ceddl'
-  },
   output: {
+    file: 'dist/page-metadata.js',
+    globals: {
+      ceddl: 'ceddl'
+    },
     format: 'umd'
   }
 },{
   input: 'src/page-ready.js',
-  dest: 'dist/page-ready.js',
-  globals: {
-    ceddl: 'ceddl'
-  },
   output: {
+    file: 'dist/page-ready.js',
+    globals: {
+      ceddl: 'ceddl'
+    },
     format: 'umd'
   }
 },{
   input: 'src/performance-timing.js',
-  dest: 'dist/performance-timing.js',
-  globals: {
-    ceddl: 'ceddl'
-  },
   output: {
+    file: 'dist/performance-timing.js',
+    globals: {
+      ceddl: 'ceddl'
+    },
+    format: 'umd'
+  }
+},{
+  input: 'src/heatmap.js',
+  output: {
+    file: 'dist/heatmap.js',
+    globals:  {
+      ceddl: 'ceddl'
+    },
     format: 'umd'
   }
 }];
+;
+var fileServer = new static.Server('./demo');
+var distServer = new static.Server('./dist');
+var modulesServer = new static.Server('./');
 
 var watcher = rollup.watch(watchOptions);
 watcher.on('event', event => {
@@ -43,10 +53,13 @@ watcher.on('event', event => {
 
 require('http').createServer(function (request, response) {
     request.addListener('end', function () {
-        if(
+        if (request.url.includes('node_modules') ) {
+            modulesServer.serve(request, response);
+        } else if(
             request.url.includes('page-metadata.js') ||
             request.url.includes('page-ready.js') ||
-            request.url.includes('performance-timing.js')
+            request.url.includes('performance-timing.js') ||
+            request.url.includes('heatmap.js')
         ) {
             distServer.serve(request, response);
         } else {

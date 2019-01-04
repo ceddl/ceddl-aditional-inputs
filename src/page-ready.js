@@ -1,4 +1,4 @@
-import ceddl from 'ceddl'
+import ceddl from 'ceddl';
 
 (function() {
 
@@ -19,7 +19,7 @@ import ceddl from 'ceddl'
         } else {
             document.addEventListener('DOMContentLoaded', callback);
         }
-    };
+    }
 
     /**
      * Reducer function to check if all keys in the store are set to true.

@@ -1,3 +1,5 @@
+/* global _ */
+
 var demo = demo? demo : {};
 demo.products = (function () {
     var productList = [];
@@ -35,12 +37,12 @@ demo.products = (function () {
             price_once: Math.floor(Math.random() * 40) + 1,
             price_month: Math.floor(Math.random() * 40) + 1,
             subscription_type: getRandomSubscriptionText()
-        }
+        };
         var elm = createDomElements(productTemplate(product));
         containerElm.insertBefore(elm, containerElm.lastChild);
         productList.push(product);
 
-        elm.addEventListener('click', function(e) {
+        elm.addEventListener('click', function() {
             demo.cart.addToCart(product);
         });
     }
@@ -56,8 +58,8 @@ demo.products = (function () {
 
     return {
         renderRandomProduct: renderRandomProduct,
-        removeRandomProduct: removeRandomProduct,
-    }
+        removeRandomProduct: removeRandomProduct
+    };
 
 })();
 

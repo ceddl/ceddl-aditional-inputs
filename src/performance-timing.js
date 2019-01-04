@@ -1,4 +1,4 @@
-import ceddl from 'ceddl'
+import ceddl from 'ceddl';
 
 (function() {
 
@@ -15,7 +15,7 @@ import ceddl from 'ceddl'
         } else {
             document.addEventListener('DOMContentLoaded', callback);
         }
-    };
+    }
 
     /**
      * Calculating steps in the page loading pipeline.
@@ -35,7 +35,7 @@ import ceddl from 'ceddl'
          * Obtaining the transferred kb of resources inluding estimated document size.
          */
         if (window.performance && window.performance.getEntriesByType) {
-            var resource
+            var resource;
             var resources = window.performance.getEntriesByType('resource');
             var documentSize = unescape(encodeURIComponent(document.documentElement.innerHTML)).length / 4.2;
             var byteTotal = 0;

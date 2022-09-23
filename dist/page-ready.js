@@ -1,42 +1,58 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('ceddl')) :
-    typeof define === 'function' && define.amd ? define(['ceddl'], factory) :
-    (factory(global.ceddl));
-}(this, (function (ceddl) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+    typeof define === 'function' && define.amd ? define(['exports'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.PageReady = {}));
+})(this, (function (exports) { 'use strict';
 
-    ceddl = ceddl && ceddl.hasOwnProperty('default') ? ceddl['default'] : ceddl;
-
-    (function() {
-
-        var _store = {};
-        var _listeners = [];
-        var _el, pageReadyWarning;
-
-        function pageReady(callback) {
+    var PageReady = /** @class */ (function () {
+        function PageReady(ceddl) {
+            var _this = this;
+            this._store = {};
+            this._listeners = [];
+            this.ceddl = ceddl;
+            this.setCompleteListener = this.setCompleteListener.bind(this);
+            this.isStoreValid = this.isStoreValid.bind(this);
+            this._el = document.querySelector('[data-page-ready]');
+            this.pageReadySetListeners(this._el ? this._el.getAttribute('data-page-ready') : '');
+            this.ceddl.eventbus.on('initialize', function () {
+                _this._el = document.querySelector('[data-page-ready]');
+                _this.pageReadySetListeners(_this._el ? _this._el.getAttribute('data-page-ready') : '');
+            });
+        }
+        /**
+         * The static method to initialize the plugin.
+         */
+        PageReady.run = function (ceddl) {
+            if (!PageReady.instance) {
+                PageReady.instance = new PageReady(ceddl);
+            }
+            return PageReady.instance;
+        };
+        PageReady.prototype.pageReady = function (callback) {
             var isReady;
+            // @ts-ignore
             if (document.attachEvent) {
                 isReady = document.readyState === "complete";
-            } else {
+            }
+            else {
                 isReady = document.readyState !== "loading";
             }
-
             if (isReady) {
                 callback();
-            } else {
+            }
+            else {
                 document.addEventListener('DOMContentLoaded', callback);
             }
-        }
-
+        };
         /**
          * Reducer function to check if all keys in the store are set to true.
          * @param {Boolean} acc
          * @param {String} key
          * @returns
          */
-        function isStoreValid(acc, key) {
-            return acc && _store[key];
-        }
-
+        PageReady.prototype.isStoreValid = function (acc, key) {
+            return acc && this._store[key];
+        };
         /**
          * Helper function that creates event callbacks which set the event as
          * completed on execution, as well as checking whether all keys in the
@@ -45,91 +61,83 @@
          * @param {String} name Event name to mark as completed on execution.
          * @returns {Function}
          */
-        function createCompleteCallback(name) {
-            return function(data) {
-                _store[name] = data;
-
-                var allCallbacksComplete = Object.keys(_store).reduce(isStoreValid, true);
+        PageReady.prototype.createCompleteCallback = function (name) {
+            var _this = this;
+            return function (data) {
+                _this._store[name] = data;
+                var allCallbacksComplete = Object.keys(_this._store).reduce(_this.isStoreValid, true);
                 if (allCallbacksComplete) {
-                    clearTimeout(pageReadyWarning);
-                    ceddl.emitEvent('pageready', _store);
+                    clearTimeout(_this.pageReadyWarning);
+                    _this.ceddl.emitEvent('pageready', _this._store);
                 }
             };
-        }
-
-        function setCompleteListener(name) {
+        };
+        PageReady.prototype.setCompleteListener = function (name) {
             // Keep a reference to the callback so we can remove it from the eventbus.
-            var markComplete = createCompleteCallback(name);
-            ceddl.eventbus.once(name, markComplete);
-
+            var markComplete = this.createCompleteCallback(name);
+            this.ceddl.eventbus.once(name, markComplete);
             return {
                 name: name,
                 markComplete: markComplete
             };
-        }
-
-        function startWarningTimeout() {
-            if(typeof pageReadyWarning !== "undefined") {
-                clearTimeout(pageReadyWarning);
+        };
+        PageReady.prototype.startWarningTimeout = function () {
+            var _this = this;
+            if (typeof this.pageReadyWarning !== "undefined") {
+                clearTimeout(this.pageReadyWarning);
             }
-            pageReadyWarning = setTimeout(function(){
-                ceddl.emitEvent('pageready', {
+            this.pageReadyWarning = setTimeout(function () {
+                _this.ceddl.emitEvent('pageready', {
                     error: true,
                     msg: 'Failed to complete within 4000 ms'
                 });
             }, 4000);
-        }
-
-
+        };
         /**
          * Method to indicate when to fire the pageready event. It takes a collection
          * of event names and waits until all of them have fired at least once before
          * dispatching the pageready event.
          */
-        function pageReadySetListeners(eventNames) {
+        PageReady.prototype.pageReadySetListeners = function (eventNames) {
+            var _this = this;
             // Reset the previous state
-            _store = {};
-            _listeners.forEach(function(eventCallback) {
-                ceddl.eventbus.off(eventCallback.name, eventCallback.markComplete);
+            this._store = {};
+            this._listeners.forEach(function (eventCallback) {
+                _this.ceddl.eventbus.off(eventCallback.name, eventCallback.markComplete);
             });
-            _listeners = [];
-
+            this._listeners = [];
             // If there is no need to wait for anything dispatch event when the page is ready.
             if (!eventNames || eventNames.length === 0) {
-                pageReady(function() {
-                    ceddl.emitEvent('pageready', _store);
+                this.pageReady(function () {
+                    _this.ceddl.emitEvent('pageready', _this._store);
                 });
                 return;
             }
-
-            startWarningTimeout();
-
+            this.startWarningTimeout();
             if (!Array.isArray(eventNames)) {
                 // Split on whitespace and remove empty entries.
-                eventNames = eventNames.split(' ').filter(function(value) {
+                eventNames = eventNames.split(' ').filter(function (value) {
                     return !!value;
                 });
             }
-
-            if(_el) {
-                _el.setAttribute('data-page-ready', eventNames.join(' '));
+            if (this._el) {
+                this._el.setAttribute('data-page-ready', eventNames.join(' '));
             }
-
             // Create the new state
-            eventNames.forEach(function(name) {
-                _store[name] = false;
+            eventNames.forEach(function (name) {
+                _this._store[name] = false;
             });
-            _listeners = eventNames.map(setCompleteListener);
-        }
+            this._listeners = eventNames.map(this.setCompleteListener);
+        };
+        return PageReady;
+    }());
+    // When ceddl is on the global we auto initialize.
+    if (typeof window !== 'undefined' && typeof window['ceddl'] !== 'undefined') {
+        PageReady.run(window['ceddl']);
+    }
 
+    exports.PageReady = PageReady;
 
-        _el = document.querySelector('[data-page-ready]');
-        pageReadySetListeners(_el ? _el.getAttribute('data-page-ready') : '');
-        ceddl.eventbus.on('initialize', function() {
-            _el = document.querySelector('[data-page-ready]');
-            pageReadySetListeners(_el ? _el.getAttribute('data-page-ready') : '');
-        });
+    Object.defineProperty(exports, '__esModule', { value: true });
 
-    })();
-
-})));
+}));

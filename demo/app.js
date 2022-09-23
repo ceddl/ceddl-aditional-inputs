@@ -1,46 +1,44 @@
-var static = require('node-static');
+var staticServer = require('node-static');
 var rollup = require('rollup');
+const typescript = require("@rollup/plugin-typescript")
+
 var watchOptions =  [{
-  input: 'src/page-metadata.js',
+  input: 'src/page-metadata.ts',
+  plugins: [typescript()],
   output: {
+    name: 'PageMetadata',
     file: 'dist/page-metadata.js',
-    globals: {
-      ceddl: 'ceddl'
-    },
     format: 'umd'
   }
 },{
-  input: 'src/page-ready.js',
+  input: 'src/page-ready.ts',
+  plugins: [typescript()],
   output: {
+    name: 'PageReady',
     file: 'dist/page-ready.js',
-    globals: {
-      ceddl: 'ceddl'
-    },
     format: 'umd'
   }
 },{
-  input: 'src/performance-timing.js',
+  input: 'src/performance-timing.ts',
+  plugins: [typescript()],
   output: {
+    name: 'PerformanceTiming',
     file: 'dist/performance-timing.js',
-    globals: {
-      ceddl: 'ceddl'
-    },
     format: 'umd'
   }
 },{
-  input: 'src/heatmap.js',
+  input: 'src/heatmap.ts',
+  plugins: [typescript()],
   output: {
+    name: 'Heatmap',
     file: 'dist/heatmap.js',
-    globals:  {
-      ceddl: 'ceddl'
-    },
-    format: 'umd'
+    format: 'umd',
   }
 }];
-;
-var fileServer = new static.Server('./demo');
-var distServer = new static.Server('./dist');
-var modulesServer = new static.Server('./');
+
+var fileServer = new staticServer.Server('./demo');
+var distServer = new staticServer.Server('./dist');
+var modulesServer = new staticServer.Server('./');
 
 var watcher = rollup.watch(watchOptions);
 watcher.on('event', event => {

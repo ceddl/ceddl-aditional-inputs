@@ -1,37 +1,35 @@
+import typescript from '@rollup/plugin-typescript';
+
 export default [{
-  input: 'src/page-metadata.js',
+  input: 'src/page-metadata.ts',
+  plugins: [typescript()],
   output: {
+    name: 'PageMetadata',
     file: 'dist/page-metadata.js',
-    globals: {
-      ceddl: 'ceddl'
-    },
     format: 'umd'
   }
 },{
-  input: 'src/page-ready.js',
+  input: 'src/page-ready.ts',
+  plugins: [typescript()],
   output: {
+    name: 'PageReady',
     file: 'dist/page-ready.js',
-    globals: {
-      ceddl: 'ceddl'
-    },
     format: 'umd'
   }
 },{
-  input: 'src/performance-timing.js',
+  input: 'src/performance-timing.ts',
+  plugins: [typescript()],
   output: {
+    name: 'PerformanceTiming',
     file: 'dist/performance-timing.js',
-    globals: {
-      ceddl: 'ceddl'
-    },
     format: 'umd'
   }
 },{
-  input: 'src/heatmap.js',
+  input: 'src/heatmap.ts',
+  plugins: [typescript()],
   output: {
+    name: 'Heatmap',
     file: 'dist/heatmap.js',
-    globals:  {
-      ceddl: 'ceddl'
-    },
-    format: 'umd'
+    format: 'umd',
   }
 }];

@@ -1,18 +1,19 @@
 {
   "name": "@ceddl/ceddl-aditional-inputs",
-  "version": "0.10.1",
+  "version": "0.11.0",
   "description": "Aditional inputs for ceddl. If the core polyfill does not have what you are looking for.",
   "repository": {
     "type": "git",
     "url": "git://github.com/ceddl/ceddl-aditional-inputs"
   },
+  "license": "MIT",
   "author": {
     "name": "Roland Broekema"
   },
   "scripts": {
     "dev": "node demo/app.js",
-    "build": "node_modules/rollup/bin/rollup -c ./rollup.config.js",
-    "lint": "node_modules/eslint/bin/eslint.js src/**",
+    "build": "rollup -c ./rollup.config.js",
+    "lint": "eslint . --ext .ts",
     "lintapp": "node_modules/eslint/bin/eslint.js demo/js/**",
     "patch": "npm version patch",
     "minor": "npm version minor",
@@ -20,17 +21,22 @@
     "push": "npm publish --access=public"
   },
   "devDependencies": {
-    "@ceddl/ceddl-polyfill": "0.9.3",
-    "copyfiles": "^2.0.0",
-    "eslint": "^5.2.0",
+    "@rollup/plugin-node-resolve": "^14.1.0",
+    "@rollup/plugin-typescript": "^8.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
+    "copyfiles": "^2.1.0",
+    "eslint": "8.22.0",
     "glob": "7.1.2",
     "heatmap.js": "^2.0.5",
     "install": "^0.12.1",
     "jasmine-core": "3.1.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "node-static": "^0.7.11",
-    "npm": "^6.2.0",
-    "rollup": "^0.62.0",
-    "uglify-js": "^3.4.7"
+    "rollup": "^2.79.1"
+  },
+  "dependencies": {
+    "@ceddl/ceddl-polyfill": "^0.9.10",
+    "tslib": "^2.4.0"
   }
 }

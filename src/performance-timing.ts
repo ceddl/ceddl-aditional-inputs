@@ -1,9 +1,38 @@
-import ceddl from 'ceddl';
+export class PerformanceTiming {
+    private static instance: PerformanceTiming;
+    private ceddl: any;
 
-(function() {
+    /**
+     * The static method to initialize the plugin.
+     */
+    public static run(ceddl): PerformanceTiming {
+        if (!PerformanceTiming.instance) {
+            PerformanceTiming.instance = new PerformanceTiming(ceddl);
+        }
 
-    function pageReady(callback) {
-        var isReady;
+        return PerformanceTiming.instance;
+    }
+
+    constructor(ceddl) {
+        this.ceddl = ceddl;
+        this.createPerformanceModel();
+        this.pageReady(() => {
+            if (!performance || !performance.timing) {
+                return;
+            } else {
+                const checkComplete = setInterval(() => {
+                    if (performance.timing.domComplete > 0) {
+                        clearInterval(checkComplete);
+                        ceddl.emitModel('performanceTiming', this.getPerformanceTimingData());
+                    }
+                }, 500);
+            }
+        });
+    }
+
+    pageReady(callback) {
+        let isReady;
+        // @ts-ignore
         if (document.attachEvent) {
             isReady = document.readyState === "complete";
         } else {
@@ -21,8 +50,8 @@ import ceddl from 'ceddl';
      * Calculating steps in the page loading pipeline.
      * @return {Object} PerformanceObj containg performance metrics
      */
-    function getPerformanceTimingData() {
-        var PerformanceObj = {
+    getPerformanceTimingData() {
+        const PerformanceObj: any = {
             'redirecting': performance.timing.fetchStart - performance.timing.navigationStart,
             'dnsconnect': performance.timing.requestStart - performance.timing.fetchStart,
             'request': performance.timing.responseStart - performance.timing.requestStart,
@@ -35,11 +64,11 @@ import ceddl from 'ceddl';
          * Obtaining the transferred kb of resources inluding estimated document size.
          */
         if (window.performance && window.performance.getEntriesByType) {
-            var resource;
-            var resources = window.performance.getEntriesByType('resource');
-            var documentSize = unescape(encodeURIComponent(document.documentElement.innerHTML)).length / 4.2;
-            var byteTotal = 0;
-            for (var i = 0; i < resources.length; i++) {
+            let resource;
+            const resources = window.performance.getEntriesByType('resource');
+            const documentSize = unescape(encodeURIComponent(document.documentElement.innerHTML)).length / 4.2;
+            let byteTotal = 0;
+            for (let i = 0; i < resources.length; i++) {
                 resource = resources[i];
                 byteTotal = byteTotal + resource.transferSize;
             }
@@ -50,59 +79,47 @@ import ceddl from 'ceddl';
         return PerformanceObj;
     }
 
-    function createPerformanceModel(mf) {
-        mf.create({
+    createPerformanceModel() {
+        this.ceddl.modelFactory.create({
             key: 'performanceTiming',
             fields: {
                 redirecting: {
-                    type: mf.fields.NumberField,
+                    type: this.ceddl.modelFactory.fields.NumberField,
                     required: true,
                 },
                 dnsconnect: {
-                    type: mf.fields.NumberField,
+                    type: this.ceddl.modelFactory.fields.NumberField,
                     required: true,
                 },
                 request: {
-                    type: mf.fields.NumberField,
+                    type: this.ceddl.modelFactory.fields.NumberField,
                     required: true,
                 },
                 response: {
-                    type: mf.fields.NumberField,
+                    type: this.ceddl.modelFactory.fields.NumberField,
                     required: true,
                 },
                 domprocessing: {
-                    type: mf.fields.NumberField,
+                    type: this.ceddl.modelFactory.fields.NumberField,
                     required: true,
                 },
                 load: {
-                    type: mf.fields.NumberField,
+                    type: this.ceddl.modelFactory.fields.NumberField,
                     required: true,
                 },
                 transferbytes: {
-                    type: mf.fields.NumberField,
+                    type: this.ceddl.modelFactory.fields.NumberField,
                     required: false,
                 },
                 transferrequests: {
-                    type: mf.fields.NumberField,
+                    type: this.ceddl.modelFactory.fields.NumberField,
                     required: false,
                 },
             }
         });
     }
-
-    createPerformanceModel(ceddl.modelFactory);
-    pageReady(function () {
-       if (!performance || !performance.timing) {
-            return;
-        } else {
-            var checkComplete = setInterval(function () {
-                if(performance.timing.domComplete > 0) {
-                    clearInterval(checkComplete);
-                    ceddl.emitModel('performanceTiming', getPerformanceTimingData());
-                }
-            }, 500);
-        }
-    });
-
-
-})();
+}
+// When ceddl is on the global we auto initialize.
+if(typeof window !== 'undefined' && typeof window['ceddl'] !== 'undefined') {
+    PerformanceTiming.run(window['ceddl']);
+}

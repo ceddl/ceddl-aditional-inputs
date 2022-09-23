@@ -1,8 +1,6 @@
 # @ceddl/ceddl-aditional-inputs
 
-📦 aditional inputs for the ceddl polyfill
-
-> This package is not included in the spec and not part of th ceddl polyfill.
+📦 Additional inputs for the ceddl polyfill
 
 ```
 npm install@ceddl/ceddl-aditional-inputs
@@ -10,7 +8,7 @@ npm install@ceddl/ceddl-aditional-inputs
 
 <h2 align="center">Introduction</h2>
 
-This aditional input repository for ceddl polyfill shows how to create custom inputs. We aim to provide plug and play solutions to common input requirements.
+This additional input repository for ceddl polyfill shows how to create custom inputs. We aim to provide plug and play solutions to common input requirements.
 
 ### Available inputs
 
@@ -42,6 +40,11 @@ PageMetadata.run(ceddl);
 Heatmap.run(ceddl);
 PerformanceTiming.run(ceddl);
 ```
+
+### On the roadmap
+
+1. Reading Behavior.
+2. In viewport observer. (Maybe part of polyfill)
 
 ### Looking for pull requests
 

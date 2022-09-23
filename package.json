@@ -1,6 +1,6 @@
 {
   "name": "@ceddl/ceddl-aditional-inputs",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "Aditional inputs for ceddl. If the core polyfill does not have what you are looking for.",
   "repository": {
     "type": "git",

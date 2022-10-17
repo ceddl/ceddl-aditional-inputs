@@ -32,4 +32,12 @@ export default [{
     file: 'dist/heatmap.js',
     format: 'umd',
   }
+},{
+  input: 'src/urchin-tracking.ts',
+  plugins: [typescript()],
+  output: {
+    name: 'UrchinTracking',
+    file: 'dist/urchin-tracking.js',
+    format: 'umd',
+  }
 }];

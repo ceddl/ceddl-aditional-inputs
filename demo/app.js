@@ -34,6 +34,14 @@ var watchOptions =  [{
     file: 'dist/heatmap.js',
     format: 'umd',
   }
+},{
+  input: 'src/urchin-tracking.ts',
+  plugins: [typescript()],
+  output: {
+    name: 'UrchinTracking',
+    file: 'dist/urchin-tracking.js',
+    format: 'umd',
+  }
 }];
 
 var fileServer = new staticServer.Server('./demo');
@@ -57,7 +65,8 @@ require('http').createServer(function (request, response) {
             request.url.includes('page-metadata.js') ||
             request.url.includes('page-ready.js') ||
             request.url.includes('performance-timing.js') ||
-            request.url.includes('heatmap.js')
+            request.url.includes('heatmap.js') ||
+            request.url.includes('urchin-tracking.js')
         ) {
             distServer.serve(request, response);
         } else {

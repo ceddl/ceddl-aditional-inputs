@@ -103,7 +103,7 @@ ceddl.eventbus.on('performanceTiming', function (data) {
 ### Plugin heatmap
 
 A heat map is a data visualization technique showing where user groups click, scroll, and move on the page.
-A visualization example is embedded in our development setup or go to the [Heatmap Blog Post](https://www.ceddlbyexample.com/blog/2019-01-04-heatmap-input-checked-off-on-the-bucket-list/)
+A visualization example is embedded in our development setup or go to the [Heatmap Blog Post](https://www.ceddlbyexample.com/blog/2019-01-04-heatmap-input-checked-off-on-the-bucket-list/?utm_source=github&utm_medium=readme&utm_campaign=main&utm_content=a02)
 
 ```js
 ceddl.eventbus.on('heatmap:update', function (data) {
@@ -160,4 +160,4 @@ ceddl-aditional-inputs has a MIT open source license.
 
 ## CEDDL-polyfill
 Customer experience digital data layer polyfill. Enable business to take back control of their analytics and marketing data footprint.
-For more information, please visit [https://www.ceddlbyexample.com/](https://www.ceddlbyexample.com/)
+For more information, please visit [https://www.ceddlbyexample.com/](https://www.ceddlbyexample.com/?utm_source=github&utm_medium=readme&utm_campaign=main&utm_content=a01)

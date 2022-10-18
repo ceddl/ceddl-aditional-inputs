@@ -10,14 +10,15 @@
             this.ceddl = ceddl;
             this.createPerformanceModel();
             this.pageReady(function () {
-                if (!performance || !performance.timing) {
+                if (!performance || !performance.getEntriesByType) {
                     return;
                 }
                 else {
                     var checkComplete_1 = setInterval(function () {
-                        if (performance.timing.domComplete > 0) {
+                        var perf = performance.getEntriesByType("navigation")[0];
+                        if (perf.domComplete > 0) {
                             clearInterval(checkComplete_1);
-                            ceddl.emitModel('performanceTiming', _this.getPerformanceTimingData());
+                            ceddl.emitModel('performanceTiming', _this.getPerformanceTimingData(perf));
                         }
                     }, 500);
                 }
@@ -52,14 +53,14 @@
          * Calculating steps in the page loading pipeline.
          * @return {Object} PerformanceObj containg performance metrics
          */
-        PerformanceTiming.prototype.getPerformanceTimingData = function () {
+        PerformanceTiming.prototype.getPerformanceTimingData = function (perf) {
             var PerformanceObj = {
-                'redirecting': performance.timing.fetchStart - performance.timing.navigationStart,
-                'dnsconnect': performance.timing.requestStart - performance.timing.fetchStart,
-                'request': performance.timing.responseStart - performance.timing.requestStart,
-                'response': performance.timing.responseEnd - performance.timing.responseStart,
-                'domprocessing': performance.timing.domComplete - performance.timing.responseEnd,
-                'load': performance.timing.loadEventEnd - performance.timing.loadEventStart
+                'redirecting': perf.fetchStart - perf.startTime,
+                'dnsconnect': perf.requestStart - perf.fetchStart,
+                'request': perf.responseStart - perf.requestStart,
+                'response': perf.responseEnd - perf.responseStart,
+                'domprocessing': perf.domComplete - perf.responseEnd,
+                'load': perf.loadEventEnd - perf.loadEventStart
             };
             /**
              * Obtaining the transferred kb of resources inluding estimated document size.

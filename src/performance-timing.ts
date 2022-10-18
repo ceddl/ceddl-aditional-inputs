@@ -17,13 +17,14 @@ export class PerformanceTiming {
         this.ceddl = ceddl;
         this.createPerformanceModel();
         this.pageReady(() => {
-            if (!performance || !performance.timing) {
+            if (!performance || !performance.getEntriesByType) {
                 return;
             } else {
                 const checkComplete = setInterval(() => {
-                    if (performance.timing.domComplete > 0) {
+                    const perf = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming
+                    if (perf.domComplete > 0) {
                         clearInterval(checkComplete);
-                        ceddl.emitModel('performanceTiming', this.getPerformanceTimingData());
+                        ceddl.emitModel('performanceTiming', this.getPerformanceTimingData(perf));
                     }
                 }, 500);
             }
@@ -50,14 +51,14 @@ export class PerformanceTiming {
      * Calculating steps in the page loading pipeline.
      * @return {Object} PerformanceObj containg performance metrics
      */
-    getPerformanceTimingData() {
+    getPerformanceTimingData(perf) {
         const PerformanceObj: any = {
-            'redirecting': performance.timing.fetchStart - performance.timing.navigationStart,
-            'dnsconnect': performance.timing.requestStart - performance.timing.fetchStart,
-            'request': performance.timing.responseStart - performance.timing.requestStart,
-            'response': performance.timing.responseEnd - performance.timing.responseStart,
-            'domprocessing': performance.timing.domComplete - performance.timing.responseEnd,
-            'load': performance.timing.loadEventEnd - performance.timing.loadEventStart
+            'redirecting': perf.fetchStart - perf.startTime,
+            'dnsconnect': perf.requestStart - perf.fetchStart,
+            'request': perf.responseStart - perf.requestStart,
+            'response': perf.responseEnd - perf.responseStart,
+            'domprocessing': perf.domComplete - perf.responseEnd,
+            'load': perf.loadEventEnd - perf.loadEventStart
         };
 
         /**

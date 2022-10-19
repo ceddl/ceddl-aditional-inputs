@@ -36,14 +36,15 @@
      * https://search.brave.com/search?q=utm+builders&source=web
      */
     var UrchinTracking = /** @class */ (function () {
-        function UrchinTracking(ceddl, prefix) {
+        function UrchinTracking(ceddl, options) {
             this.ceddl = ceddl;
             this.createUrchinModel();
             // No ie11 support.
             if (URLSearchParams) {
-                var urchinArray = this.getUrchinData(prefix);
+                var urchinArray = this.getUrchinData(options);
                 // Move from array to object based model without assigning variables.
                 if (urchinArray.length > 0) {
+                    this.removeUrchinFromUrl(urchinArray, options);
                     ceddl.emitModel('urchinTracking', __assign(__assign({}, urchinArray.reduce(function (accumulator, value) {
                         var _a;
                         return __assign(__assign({}, accumulator), (_a = {}, _a[value[0]] = value[1], _a));
@@ -54,9 +55,9 @@
         /**
          * The static method to initialize the plugin.
          */
-        UrchinTracking.run = function (ceddl, prefix) {
+        UrchinTracking.run = function (ceddl, options) {
             if (!UrchinTracking.instance) {
-                UrchinTracking.instance = new UrchinTracking(ceddl, prefix);
+                UrchinTracking.instance = new UrchinTracking(ceddl, options);
             }
             return UrchinTracking.instance;
         };
@@ -64,8 +65,8 @@
          *   Urchin Tracking Module (UTM) parameters from the url
          *   and removing the prefixes from the modelkeys
          */
-        UrchinTracking.prototype.getUrchinData = function (prefix) {
-            if (prefix === void 0) { prefix = 'utm'; }
+        UrchinTracking.prototype.getUrchinData = function (options) {
+            var prefix = !options || !options.prefix ? 'utm' : options.prefix;
             var searchParams = new URLSearchParams(window.location.search);
             return Array.from(searchParams).filter(function (utms) {
                 return utms[0].startsWith("".concat(prefix, "_"));
@@ -73,14 +74,26 @@
                 return [utms[0].replace(new RegExp(prefix + '_', 'i'), ''), utms[1]];
             });
         };
+        UrchinTracking.prototype.removeUrchinFromUrl = function (urchinArray, options) {
+            var prefix = !options || !options.prefix ? 'utm' : options.prefix;
+            var removeOnLoad = !options || options.prefix === true ? true : false;
+            var parsedUrl = new URL(window.location.href);
+            var urlParams = parsedUrl.searchParams;
+            if (!urlParams) {
+                return window.location.href;
+            }
+            if (removeOnLoad) {
+                urchinArray.forEach(function (value) {
+                    urlParams["delete"]("".concat(prefix, "_").concat(value[0]));
+                });
+            }
+            var previousState = history.state;
+            history.replaceState(previousState, '', parsedUrl.toString());
+        };
         UrchinTracking.prototype.createUrchinModel = function () {
             this.ceddl.modelFactory.create({
                 key: 'urchinTracking',
                 fields: {
-                    id: {
-                        type: this.ceddl.modelFactory.fields.StringField,
-                        required: false
-                    },
                     source: {
                         type: this.ceddl.modelFactory.fields.StringField,
                         required: true
@@ -108,7 +121,7 @@
     }());
     // When ceddl is on the global we auto initialize.
     if (typeof window !== 'undefined' && typeof window['ceddl'] !== 'undefined') {
-        UrchinTracking.run(window['ceddl'], window['urchinTrackingPrefix']);
+        UrchinTracking.run(window['ceddl'], window['urchinOptions']);
     }
 
     exports.UrchinTracking = UrchinTracking;

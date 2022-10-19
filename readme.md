@@ -121,13 +121,15 @@ Government and web standards organizations are under pressure to do more for cit
 import {ceddl} from '@ceddl/ceddl-polyfill';
 import {UrchinTracking} from '@ceddl/ceddl-aditional-inputs/dist/urchin-tracking';
 
-UrchinTracking.run(ceddl, 'utm');
+UrchinTracking.run(ceddl, {
+  prefix: 'utm',
+  removeOnLoad: true
+});
 ceddl.eventbus.on('hurchinTracking', function (data) {
   console.log(data);
 });
 
 // "urchinTracking": {
-//   "id": "email12"
 //   "source": "hubspot"
 //   "medium": "email"
 //   "campaign": "main"

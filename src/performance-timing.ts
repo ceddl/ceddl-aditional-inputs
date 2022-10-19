@@ -53,12 +53,12 @@ export class PerformanceTiming {
      */
     getPerformanceTimingData(perf) {
         const PerformanceObj: any = {
-            'redirecting': perf.fetchStart - perf.startTime,
-            'dnsconnect': perf.requestStart - perf.fetchStart,
-            'request': perf.responseStart - perf.requestStart,
-            'response': perf.responseEnd - perf.responseStart,
-            'domprocessing': perf.domComplete - perf.responseEnd,
-            'load': perf.loadEventEnd - perf.loadEventStart
+            'redirecting': Math.round(perf.fetchStart - perf.startTime),
+            'dnsconnect': Math.round(perf.requestStart - perf.fetchStart),
+            'request': Math.round(perf.responseStart - perf.requestStart),
+            'response': Math.round(perf.responseEnd - perf.responseStart),
+            'domprocessing': Math.round(perf.domComplete - perf.responseEnd),
+            'load': Math.round(perf.loadEventEnd - perf.loadEventStart)
         };
 
         /**
